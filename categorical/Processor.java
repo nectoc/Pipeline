@@ -59,7 +59,7 @@ public class Processor {
 
 		//Add field names to a Struct Field type List
 		for (String fieldName: featureNames) {
-			fields.add(DataTypes.createStructField(fieldName, DataTypes.DoubleType, true));
+			fields.add(DataTypes.createStructField(fieldName, DataTypes.StringType, true));
 		}
 
 		//Add structFields to a structType object (creates schema to create the data frame)
@@ -77,13 +77,7 @@ public class Processor {
 				new Function<String, Row>() {
 					public Row call(String record) throws Exception {
 						String[] fields = record.split(",(?=([^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-						Double[] fieldValues = new Double[fields.length];
-						int i = 0;
-						for (String s : fields) {
-							fieldValues[i] = Double.parseDouble(s);
-							i++;
-						}
-						return RowFactory.create((Object[]) fieldValues);
+						return RowFactory.create((Object[]) fields);
 					}
 				});
 
@@ -117,7 +111,7 @@ public class Processor {
 		//PipelineModel model = pipeline.fit(frame);
 		//System.out.println();
 
-		Pipeline pipeline = new Pipeline().setStages(new PipelineStage[] {ur});
+		Pipeline pipeline = new Pipeline().setStages(new PipelineStage[] {ur,vectorAssembler});
 		PipelineModel model = pipeline.fit(frame);
 	}
 }
