@@ -117,7 +117,7 @@ public class Processor {
 		//PipelineModel model = pipeline.fit(frame);
 		//System.out.println();
 
-		Pipeline pipeline = new Pipeline().setStages(new PipelineStage[] {ur,vectorAssembler});
+		Pipeline pipeline = new Pipeline().setStages(new PipelineStage[] {ur});
 		PipelineModel model = pipeline.fit(frame);
 	}
 }
